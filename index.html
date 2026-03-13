@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CLUTCH OR KICK</title>
+    <title>CLUTCH OR KICK: ALMATY SECTOR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=JetBrains+Mono:wght@800&display=swap');
@@ -50,13 +50,26 @@
             z-index: 1000;
             pointer-events: none;
         }
+
+        #memeAlert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1100;
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center">
 
     <div id="startScreen" class="text-center z-10 p-6">
         <h1 class="text-5xl font-black mb-4 glitch italic uppercase" style="font-family: 'Black Ops One';">Clutch or Kick</h1>
-        <p class="text-[10px] text-white opacity-50 mb-10 uppercase tracking-[0.3em]">Stress Test v1.0 // Almaty Sector</p>
+        <p class="text-[10px] text-white opacity-50 mb-10 uppercase tracking-[0.3em]">Special for Reat, Ikram & Kamil</p>
         <button onclick="startTest()" class="border-2 border-red-600 px-10 py-4 text-red-600 font-black active:bg-red-600 active:text-white transition-all uppercase">
             Вступить в клатч
         </button>
@@ -64,11 +77,12 @@
 
     <div id="gameScreen" class="hidden w-full h-full relative">
         <div id="timer" class="absolute top-12 left-1/2 -translate-x-1/2 text-6xl font-black italic opacity-20">15</div>
-        <div id="shout" class="absolute w-full text-center top-1/4 text-2xl font-black text-white/80 uppercase pointer-events-none px-4"></div>
+        <div id="shout" class="absolute w-full text-center top-1/4 text-2xl font-black text-white/80 uppercase pointer-events-none px-4 italic"></div>
+        <div id="memeAlert" class="hidden glitch uppercase text-white"></div>
     </div>
 
     <div id="resultScreen" class="hidden text-center z-10 p-6">
-        <h2 class="text-[10px] uppercase text-white opacity-50 mb-2 tracking-widest">Анализ завершен:</h2>
+        <h2 class="text-[10px] uppercase text-white opacity-50 mb-2 tracking-widest">Твой статус в банде:</h2>
         <div id="verdictTitle" class="text-4xl font-black mb-4 uppercase glitch italic"></div>
         <p id="verdictDesc" class="text-sm text-gray-400 mb-10 italic max-w-xs mx-auto"></p>
         <button onclick="location.reload()" class="border border-white/20 px-6 py-2 text-[10px] text-white uppercase font-bold">Рестарт</button>
@@ -76,60 +90,65 @@
 
     <script>
         let score = 0;
-    let timeLeft = 15;
-    let gameActive = false;
-    
-    const shouts = ["ОН НА ШОРТЕ!!", "ДАЙ АВИК!!", "ЧТО ТЫ ДЕЛАЕШЬ?!", "В КРЫСУ ИДЕТ!!", "ФЛЕШКУ КИНЬ!", "МИД ЧЕКАЙ!", "ГДЕ ИНФА?!"];
-    
-    // Ссылки на звуки
-    const shotUrl = 'https://www.soundjay.com/buttons/sounds/button-20.mp3';
-    const flashUrl = 'https://www.myinstants.com/media/sounds/csgo-flashbang-sound-effect.mp3';
-
-    // Создаем аудио-объекты заранее
-    const shotSnd = new Audio(shotUrl);
-    const flashSnd = new Audio(flashUrl);
-
-    function startTest() {
-        // КРИТИЧЕСКИЙ МОМЕНТ ДЛЯ МОБИЛОК: 
-        // Активируем аудио-контекст через пользовательское действие
-        shotSnd.play().then(() => {
-            shotSnd.pause();
-            shotSnd.currentTime = 0;
-        }).catch(e => console.log("Audio unlock error:", e));
-
-        flashSnd.play().then(() => {
-            flashSnd.pause();
-            flashSnd.currentTime = 0;
-        }).catch(e => console.log("Audio unlock error:", e));
-
-        // Переключаем экраны
-        document.getElementById('startScreen').classList.add('hidden');
-        document.getElementById('gameScreen').classList.remove('hidden');
-        document.body.classList.add('shaking');
-        gameActive = true;
+        let timeLeft = 15;
+        let gameActive = false;
         
-        const gameInterval = setInterval(() => {
-            if (!gameActive) {
-                clearInterval(gameInterval);
-                return;
-            }
-            timeLeft--;
-            document.getElementById('timer').innerText = timeLeft;
+        const shouts = [
+            "РЕАТ, ЗАЧЕМ ТЫ БАЙТИШЬ?!",
+            "Икрам, проснись, бомбу ставят!",
+            "Имран, не подглядывай!",
+            "КАМИЛЬ, ТЫ ГДЕ ВООБЩЕ?!",
+            "Реат купил авик на последние...",
+            "СЕЙВИ АВИК РЕАТУ!",
+            "Икрам ушел кушать, играет Имран",
+            "РЕАТ КИДАЕТ ФЛЕШКУ!",
+            "ПОЧЕМУ КАМИЛЬ НЕ В СЕТИ?"
+        ];
+        
+        const shotUrl = 'https://www.soundjay.com/buttons/sounds/button-20.mp3';
+        const flashUrl = 'https://www.myinstants.com/media/sounds/csgo-flashbang-sound-effect.mp3';
+
+        const shotSnd = new Audio(shotUrl);
+        const flashSnd = new Audio(flashUrl);
+
+        function startTest() {
+            shotSnd.play().then(() => {
+                shotSnd.pause();
+                shotSnd.currentTime = 0;
+            }).catch(e => console.log("Audio unlock error:", e));
+
+            flashSnd.play().then(() => {
+                flashSnd.pause();
+                flashSnd.currentTime = 0;
+            }).catch(e => console.log("Audio unlock error:", e));
+
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+            document.body.classList.add('shaking');
+            gameActive = true;
             
-            if (timeLeft % 2 === 0) {
-                document.getElementById('shout').innerText = shouts[Math.floor(Math.random() * shouts.length)];
-            }
+            const gameInterval = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(gameInterval);
+                    return;
+                }
+                timeLeft--;
+                document.getElementById('timer').innerText = timeLeft;
+                
+                if (timeLeft % 2 === 0) {
+                    document.getElementById('shout').innerText = shouts[Math.floor(Math.random() * shouts.length)];
+                }
 
-            if (timeLeft <= 0) {
-                gameActive = false;
-                showResult();
-            }
-        }, 1000);
+                if (timeLeft <= 0) {
+                    gameActive = false;
+                    showResult();
+                }
+            }, 1000);
 
-        spawnTarget();
-    }
+            spawnTarget();
+        }
 
-    function spawnTarget() {
+        function spawnTarget() {
         if (!gameActive) return;
 
         const gameScreen = document.getElementById('gameScreen');
@@ -148,17 +167,21 @@
             e.preventDefault();
             e.stopPropagation();
             
-            // Клонируем звук для мгновенного отклика на мобилках
             const s = shotSnd.cloneNode();
             s.volume = 0.5;
-            s.play();
+            s.play().catch(()=>{});
             
             if (!isFlash) score++;
             target.remove();
-            spawnTarget();
+            // Чуть быстрее спавним следующую при попадании
+            setTimeout(spawnTarget, 50); 
         };
         
         gameScreen.appendChild(target);
+
+        // ХАРДКОР ТАЙМИНГИ:
+        // Флешка исчезает (взрывается) через 300мс, прицел исчезает через 550мс
+        const lifetime = isFlash ? 300 : 550;
 
         setTimeout(() => {
             if (target.parentNode) {
@@ -166,38 +189,64 @@
                 target.remove();
                 spawnTarget();
             }
-        }, isFlash ? 750 : 1300);
+        }, lifetime);
     }
 
-    function triggerFlash() {
-        const fS = flashSnd.cloneNode();
-        fS.play();
-        
-        const f = document.createElement('div');
-        f.className = 'flash-white';
-        document.body.appendChild(f);
-        
-        setTimeout(() => {
-            f.style.transition = "opacity 1.5s";
-            f.style.opacity = "0";
-            setTimeout(() => f.remove(), 1500);
-        }, 50);
-    }
+        function triggerFlash() {
+            const alert = document.getElementById('memeAlert');
+            alert.innerText = "РЕАТ КИНУЛ В ЛИЦО!";
+            alert.classList.remove('hidden');
 
-    function showResult() {
-        document.getElementById('gameScreen').classList.add('hidden');
-        document.body.classList.remove('shaking');
-        document.getElementById('resultScreen').classList.remove('hidden');
-        
-        let title, desc;
-        if (score < 5) { title = "Трясущиеся руки"; desc = "Ты не попал бы даже в лежачего тиммейта. Продай скины, купи успокоительное."; }
-        else if (score < 12) { title = "Жертва байта"; desc = "Слишком много слушаешь криков. Твой прицел живет своей жизнью."; }
-        else if (score < 20) { title = "Клатч-машина"; desc = "Мутнул всех и затащил. Братья в группе официально признают тебя батей."; }
-        else { title = "S1MPLE MODE"; desc = "Ты видишь матрицу. Ливай из этой группы и иди в NAVI."; }
+            const fS = flashSnd.cloneNode();
+            fS.play().catch(()=>{});
+            
+            const f = document.createElement('div');
+            f.className = 'flash-white';
+            document.body.appendChild(f);
+            
+            setTimeout(() => {
+                f.style.transition = "opacity 1.5s";
+                f.style.opacity = "0";
+                alert.classList.add('hidden');
+                setTimeout(() => f.remove(), 1500);
+            }, 100);
+        }
 
-        document.getElementById('verdictTitle').innerText = title;
-        document.getElementById('verdictDesc').innerText = desc;
-    }
+        function showResult() {
+    document.getElementById('gameScreen').classList.add('hidden');
+    document.body.classList.remove('shaking');
+    document.getElementById('resultScreen').classList.remove('hidden');
+    
+    // Группируем вердикты по уровням сложности
+    const pool = {
+        low: [
+            { title: "ЛОУТАБ-ГВАРДИЯ", desc: "Ты как Реат: охраняешь низ таблицы и просишь засейвить авик, которого у тебя нет. Стыдно!" },
+            { title: "СПЯЩИЙ МЕДВЕДЬ", desc: "Уровень концентрации как у Икрама. Ты либо спишь, либо Имран за тебя играет. Иди покушай." },
+            { title: "ЭКО-ТЕРРОРИСТ", desc: "Ты вообще по кнопкам попадал? Даже Камиль играет чаще, чем ты попадаешь в тайминг." }
+        ],
+        mid: [
+            { title: "ЖЕРТВА БАЙТА", desc: "Слишком много слушаешь крики в микрофон. Твой прицел живет своей жизнью, как авик Реата." },
+            { title: "ПОЧТИ КАМИЛЬ", desc: "Ты вроде играешь, а вроде тебя и нет. Вроде попал, а вроде и в молоко. Зайди в лобби нормально!" },
+            { title: "БРАТИШКА ИМРАН", desc: "Играешь неплохо, но мы-то знаем, что за ноутом сидит младший, пока Икрам спит." }
+        ],
+        high: [
+            { title: "БАТЯ АЛМАТЫ", desc: "Замутал Реата, разбудил Икрама, нашел Камиля. Ты — машина, забирай авик и тащи в соло!" },
+            { title: "S1MPLE ИЗ ГРУППЫ", desc: "Читы вырубай. С такой реакцией тебе пора в NAVI, а не с этими раками в лобби сидеть." },
+            { title: "ГРОЗА РЕАТА", desc: "Ты единственный, кто не ослеп от флешек Реата. Твои глаза — это радары. Уважение!" }
+        ]
+    };
+
+    let selectedPool;
+    if (score < 8) selectedPool = pool.low;
+    else if (score < 18) selectedPool = pool.mid;
+    else selectedPool = pool.high;
+
+    // Выбираем рандомный вердикт из подходящей корзины
+    const finalVerdict = selectedPool[Math.floor(Math.random() * selectedPool.length)];
+
+    document.getElementById('verdictTitle').innerText = finalVerdict.title;
+    document.getElementById('verdictDesc').innerText = finalVerdict.desc;
+}
     </script>
 </body>
 </html>
